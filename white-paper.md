@@ -20,7 +20,7 @@ This white paper documents:
 - Empirical data from our own developer account demonstrating the methodology's effectiveness
 - A framework for implementation across enterprise AI stacks
 
-**The core finding: This is not a pricing problem. It is a consumption discipline problem. And it is entirely solvable.**
+**The core finding: This is not a pricing problem. It is a consumption discipline problem that is entirely solvable.**
 
 > Unlike every other cost reduction strategy, token hygiene creates a compounding intelligence effect — where leaner context produces smarter outputs, and smarter outputs refine leaner context, in a self-improving loop that gets better and cheaper every month.
 
@@ -102,60 +102,27 @@ The Token Hygiene System is a three-component methodology for architecting AI wo
 
 **It is not about using AI less. It is about using AI better.**
 
-### 3.2 Component One: The Lumberjack Protocol
+### 3.2 Component One: Context Architecture
 
-**Problem it solves:** Monolithic context files that load thousands of tokens of irrelevant information on every model call.
+**The problem:** Monolithic context files load thousands of tokens of irrelevant information on every single model call — whether those tokens are needed or not. Every turn re-reads the same instructions. Every agent re-loads the same background. Static information that never changes gets re-sent fresh on every call, at full input token cost, indefinitely. The waste is structural and invisible until the bill arrives.
 
-**What it does:** Slice large prompt files, instruction sets, documentation, and context files into lean, focused arch file trees. Each file contains only what's needed for a specific task or capability. Files load on demand — not by default.
-
-**Implementation:**
-
-- Audit all existing prompt and context files for size and relevance
-- Identify which sections are actually used on which calls
-- Decompose monolithic files into focused modules
-- Build a lean root index file that references modules without loading them
-- Implement on-demand loading so only relevant modules enter context
-
-**Result:** Context windows contain only what each specific call requires. Token consumption drops proportionally to the ratio of what was previously loaded unnecessarily.
-
-**Named for:** The act of clearing deadwood — cutting away what doesn't belong so the structure underneath can breathe.
+**Our solution:** Only what each specific call requires enters the context window. Token consumption drops proportionally to what was previously loaded unnecessarily.
 
 ---
 
-### 3.3 Component Two: Prompt Caching Architecture
+### 3.3 Component Two: Caching Strategy
 
-**Problem it solves:** Paying full input token prices for information that hasn't changed since the last call.
+**The problem:** Organizations pay full input token prices for information that hasn't changed since the last call. System prompts, instructions, product context, and background documentation get re-sent thousands of times per day at full cost — identical content, identical price, every single turn.
 
-**What it does:** Systematically identify which context elements are static or semi-static, write them into cache once, and read from cache on subsequent calls at a fraction of the cost.
-
-**Implementation:**
-
-- Classify all context elements by change frequency: static, semi-static, dynamic
-- Architect prompts so static elements appear first (for maximum cache utilization)
-- Implement cache write on first call, cache read on subsequent calls
-- Monitor cache hit rates to verify effectiveness
-- Refresh cache only when underlying content actually changes
-
-**Result:** The overwhelming majority of token consumption shifts from expensive raw input to cheap cache reads. Our empirical data shows this ratio reaching 83% cache reads on peak usage days.
-
-**The economics:** Prompt cache read tokens cost a fraction of standard input tokens. At scale, this is not a marginal saving — it is a structural cost transformation.
+**Our solution:** Context is written once and read repeatedly at a fraction of the cost. Our data shows this shift reaching 83% cache reads on peak usage days. At scale, this is not a marginal saving — it is a structural cost transformation.
 
 ---
 
-### 3.4 Component Three: Shadow Clone Efficiency
+### 3.4 Component Three: Parallel Efficiency
 
-**Problem it solves:** Sequential redundant processing that forces agents to cover the same ground multiple times.
+**The problem:** Sequential redundant processing forces agents to cover the same ground multiple times. A single agent handles everything in a linear chain — each step waiting for the last, compounding token waste and time at every turn.
 
-**What it does:** Decompose complex multi-step workflows into parallel workstreams, each handled by a specialized sub-agent (Shadow Clone) working simultaneously rather than sequentially.
-
-**Implementation:**
-
-- Map existing workflows to identify sequential steps that could run in parallel
-- Identify which steps have dependencies (must be sequential) vs. independence (can parallelize)
-- Architect parallel sub-agent execution for independent workstreams
-- Aggregate outputs at completion rather than passing context through a single linear chain
-
-**Result:** More work completed per token consumed. Parallel efficiency replaces sequential redundancy. Time-to-completion drops while token consumption per unit of output drops with it.
+**Our solution:** Independent tasks run simultaneously rather than sequentially. More work completed per token consumed. Time-to-completion drops while token consumption per unit of output drops with it.
 
 ---
 
