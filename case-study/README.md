@@ -119,7 +119,7 @@ Model routing is not optional. It is the third component.
 | Model | Cache Read Ratio | Write Amortization |
 |---|---|---|
 | Claude Haiku 4.5 | **0.0%** | — |
-| Claude Sonnet 4.6 | **58.9% climbing to 76%+ at maturity** | 2.24× |
+| Claude Sonnet 4.6 | **58.9% climbing to 76%+ at maturity** | 2.24× (May 2026) → 4.84× (June 6, 2026) — still climbing.|
  
 Haiku 4.5 does not support prompt caching. Confirmed across every test. Routing to the wrong model eliminates the savings entirely. Most engineering teams discover this after months of wasted budget. We found it in one session. That is the expertise gap this methodology closes.
  
