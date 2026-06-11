@@ -30,19 +30,19 @@ This is not a setting. It is an architecture.
  
  
 ### 01 — All Workspaces Cost · May 2026
-`01-all-workspaces-actual-cost-89.png`
+[01-all-workspaces-actual-cost-89.png](./01-all-workspaces-actual-cost-89.png)
  
 The receipt. $89.40 actual. $432.03 at standard Sonnet 4.6 input rate ($3.00/M × 144,011,625 tokens). $342.63 saved. 79.3% reduction. All workspaces. All models. Full month. Immutable timestamp.
  
  
 ### 02 — May 2026 Monthly Token Overview
-`02-may-2026-monthly-overview.png`
+[02-may-2026-monthly-overview.png](./02-may-2026-monthly-overview.png)
  
 144,011,625 tokens in. 945,674 tokens out. 2 web searches. Claude Sonnet 4.6 dominant throughout. This establishes the baseline volume — the same model, the same scale, used in the standard rate calculation.
  
  
 ### 03 — May 16 Peak Day · Token Type Breakdown
-`03-may-16-peak-day-token-type.png`
+[03-may-16-peak-day-token-type.png](./03-may-16-peak-day-token-type.png)
  
 The mechanism made visible. 60,776,845 tokens on a single day.
  
@@ -57,7 +57,7 @@ The mechanism made visible. 60,776,845 tokens on a single day.
  
  
 ### 04 — May 16 Peak Day · Cost by Token Type
-`04-may-16-cost-breakdown.png`
+[04-may-16-cost-breakdown.png](./04-may-16-cost-breakdown.png)
  
 The cost proof for the same day.
  
@@ -73,7 +73,7 @@ $17.79 of that day's cost was cache reads — the cheapest token type. $0.08 was
  
  
 ### 05 — May 18–24 · Weekly Token Type Consistency
-`05-may-week-18-24-token-type.png`
+[05-may-week-18-24-token-type.png](./05-may-week-18-24-token-type.png)
  
 The week after the May 16 peak. Cache reads dominating every day. May 23 tooltip: 23,573,495 cache reads out of 24,896,521 total — 94.7% cache efficiency.
  
@@ -81,7 +81,7 @@ This is not a one-day result. This is the system holding.
  
  
 ### 06 — June 3 · Live Validation · Token Breakdown
-`06-june-03-live-validation-tokens.png`
+[06-june-03-live-validation-tokens.png](./06-june-03-live-validation-tokens.png)
  
 June 3, 2026 — the same day Sam Altman confirmed enterprise token costs were a "huge issue" on a public livestream. Lionfish7777 ran a full Claude Code production session that day: GitHub repo built, white paper written, documentation committed.
  
@@ -96,7 +96,7 @@ The methodology that solved May was running underneath an entire day of producti
  
  
 ### 07 — June 3 · Live Validation · Cost Breakdown
-`07-june-03-cost-breakdown.png`
+[07-june-03-cost-breakdown.png](./07-june-03-cost-breakdown.png)
  
 The cost receipt for June 3.
  
@@ -112,7 +112,7 @@ A full production day. $19.50. The same week enterprises were receiving $500 mil
  
  
 ### 08 — Haiku 4.5 vs Sonnet 4.6 · Cache Ratio Proof
-`08-haiku-vs-sonnet-cache-ratio.png`
+[08-haiku-vs-sonnet-cache-ratio.png](./08-haiku-vs-sonnet-cache-ratio.png)
  
 Model routing is not optional. It is the third component.
  
