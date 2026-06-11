@@ -89,4 +89,3 @@ any enterprise AI stack for token efficiency.
 **Contact:** lionfish.builds@gmail.com  
 **GitHub:** github.com/Lionfish7777  
 **LinkedIn:** [www.linkedin.com/in/nicolas-petroff](https://www.linkedin.com/in/nicolas-petroff)
-**GitHub:** github.com/Lionfish7777
