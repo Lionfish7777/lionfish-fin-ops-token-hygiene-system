@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lionfish7777 — Before / After Token Audit</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace;
+      background: #0d1117;
+      color: #e6edf3;
+      padding: 40px 24px;
+      min-height: 100vh;
+    }
+ 
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+ 
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #f0c040;
+      margin-bottom: 8px;
+    }
+ 
+    header p {
+      font-size: 0.85rem;
+      color: #8b949e;
+    }
+ 
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto 48px;
+    }
+ 
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 24px;
+    }
+ 
+    .card.highlight {
+      border-color: #388bfd;
+    }
+ 
+    .card-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+ 
+    .card-label.a { color: #f85149; }
+    .card-label.b { color: #3fb950; }
+    .card-label.c { color: #58a6ff; }
+ 
+    .card h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #e6edf3;
+    }
+ 
+    .token-bar-wrap {
+      margin-bottom: 16px;
+    }
+ 
+    .token-bar-label {
+      font-size: 0.75rem;
+      color: #8b949e;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+ 
+    .token-bar-track {
+      height: 20px;
+      background: #21262d;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+ 
+    .token-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+ 
+    .fill-raw    { background: #f85149; }
+    .fill-cached { background: #58a6ff; }
+    .fill-output { background: #3fb950; }
+ 
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #21262d;
+      font-size: 0.82rem;
+    }
+ 
+    .stat-row:last-child { border-bottom: none; }
+ 
+    .stat-label { color: #8b949e; }
+    .stat-value { font-weight: 600; font-variant-numeric: tabular-nums; }
+ 
+    .stat-value.red   { color: #f85149; }
+    .stat-value.green { color: #3fb950; }
+    .stat-value.blue  { color: #58a6ff; }
+    .stat-value.gold  { color: #f0c040; }
+ 
+    /* Findings */
+    .findings {
+      max-width: 1100px;
+      margin: 0 auto 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+ 
+    .finding {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 20px 24px;
+    }
+ 
+    .finding h3 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      color: #f0c040;
+    }
+ 
+    .finding p {
+      font-size: 0.82rem;
+      color: #8b949e;
+      line-height: 1.6;
+    }
+ 
+    .finding p strong { color: #e6edf3; }
+ 
+    /* Scale table */
+    .scale-section {
+      max-width: 1100px;
+      margin: 0 auto 48px;
+    }
+ 
+    .scale-section h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #f0c040;
+      margin-bottom: 16px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+ 
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+ 
+    thead tr {
+      border-bottom: 2px solid #30363d;
+    }
+ 
+    th {
+      text-align: left;
+      padding: 8px 12px;
+      color: #8b949e;
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+ 
+    tbody tr {
+      border-bottom: 1px solid #21262d;
+    }
+ 
+    tbody tr:last-child { border-bottom: none; }
+ 
+    td {
+      padding: 10px 12px;
+      color: #e6edf3;
+      font-variant-numeric: tabular-nums;
+    }
+ 
+    td.savings { color: #3fb950; font-weight: 700; }
+    td.muted   { color: #8b949e; }
+ 
+    footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #484f58;
+      margin-top: 48px;
+    }
+ 
+    .badge {
+      display: inline-block;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.72rem;
+      color: #8b949e;
+      margin: 0 4px;
+    }
+  </style>
+</head>
+<body>
+ 
+<header>
+  <h1>LIONFISH7777 — BEFORE / AFTER TOKEN AUDIT</h1>
+  <p>A/B/C Benchmark · claude-sonnet-4-6 · June 6, 2026 · Fresh API key · No prior cache state</p>
+</header>
+ 
+<!-- Three config cards -->
+<div class="grid">
+ 
+  <!-- A -->
+  <div class="card">
+    <div class="card-label a">Config A</div>
+    <h2>Monolith — No Cache</h2>
+ 
+    <div class="token-bar-wrap">
+      <div class="token-bar-label">
+        <span>Raw Input</span><span>1,506 tokens</span>
+      </div>
+      <div class="token-bar-track">
+        <div class="token-bar-fill fill-raw" style="width:100%"></div>
+      </div>
+    </div>
+ 
+    <div class="token-bar-wrap">
+      <div class="token-bar-label">
+        <span>Cached Input</span><span>0 tokens</span>
+      </div>
+      <div class="token-bar-track">
+        <div class="token-bar-fill fill-cached" style="width:0%"></div>
+      </div>
+    </div>
+ 
+    <div style="margin-top:20px;">
+      <div class="stat-row">
+        <span class="stat-label">Raw input tokens</span>
+        <span class="stat-value red">1,506</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Cached tokens</span>
+        <span class="stat-value muted">0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Cache ratio</span>
+        <span class="stat-value red">0%</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Cost per request</span>
+        <span class="stat-value red">$0.005058</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Savings vs baseline</span>
+        <span class="stat-value muted">—</span>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- B -->
+  <div class="card">
+    <div class="card-label b">Config B</div>
+    <h2>Arch — Cache Write</h2>
+ 
+    <div class="token-bar-wrap">
+      <div class="token-bar-label">
+        <span>Raw Input</span><span>19 tokens</span>
+      </div>
+      <div class="token-bar-track">
+        <div class="token-bar-fill fill-raw" style="width:1.3%"></div>
+      </div>
+    </div>
+ 
+    <div class="token-bar-wrap">
+      <div class="token-bar-label">
+        <span>Cached Input</span><span>2,902 tokens</span>
+      </div>
+      <div class="token-bar-track">
+        <div class="token-bar-fill fill-cached" style="width:98.7%"></div>
+      </div>
+    </div>
+ 
+    <div style="margin-top:20px;">
+      <div class="stat-row">
+        <span class="stat-label">Raw input tokens</span>
+        <span class="stat-value green">19</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Cached tokens</span>
+        <span class="stat-value blue">2,902</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Cache ratio</span>
+        <span class="stat-value blue">99.4%</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Cost per request</span>
+        <span class="stat-value green">$0.003201</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Savings vs A</span>
+        <span class="stat-value green">36.7%</span>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- C -->
+  <div class="card highlight">
+    <div class="card-label c">Config C</div>
+    <h2>Arch — Cache Hit (Steady State)</h2>
+ 
+    <div class="token-bar-wrap">
+      <div class="token-bar-label">
+        <span>Raw Input</span><span>3 tokens</span>
+      </div>
+      <div class="token-bar-track">
+        <div class="token-bar-fill fill-raw" style="width:0.1%"></div>
+      </div>
+    </div>
+ 
+    <div class="token-bar-wrap">
+      <div class="token-bar-label">
+        <span>Cached Input</span><span>2,902 tokens</span>
+      </div>
+      <div class="token-bar-track">
+        <div class="token-bar-fill fill-cached" style="width:99.9%"></div>
+      </div>
+    </div>
+ 
+    <div style="margin-top:20px;">
+      <div class="stat-row">
+        <span class="stat-label">Raw input tokens</span>
+        <span class="stat-value blue">3</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Cached tokens</span>
+        <span class="stat-value blue">2,902</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Cache ratio</span>
+        <span class="stat-value blue">99.9%</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Cost per request</span>
+        <span class="stat-value green">$0.003242</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Raw input reduction vs A</span>
+        <span class="stat-value gold">99.8%</span>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+ 
+<!-- Findings -->
+<div class="findings">
+ 
+  <div class="finding">
+    <h3>Finding 1 — Why C costs slightly more than B</h3>
+    <p>
+      Cache reads ($0.30/M) are priced below cache writes ($3.75/M).
+      Config B is a fresh write — higher per-token cost on that single call.
+      Config C reads from warm cache — lower per-token cost, but the write
+      was already paid. At any real request volume, <strong>the write amortizes
+      rapidly and cumulative C cost runs far below A.</strong>
+      Breakeven: 2 requests. May 2026 amortization ratio: 4.84×.
+    </p>
+  </div>
+ 
+  <div class="finding">
+    <h3>Finding 2 — Haiku 4.5 cache behavior</h3>
+    <p>
+      <strong>claude-haiku-4-5-20251001 returned 0% cache activity</strong>
+      across every test configuration. Cache control was correctly structured.
+      The model does not honor <code>cache_control: ephemeral</code>.
+      All production savings in this system are driven by claude-sonnet-4-6.
+      Teams routing to Haiku expecting cache savings will see none —
+      a finding most teams discover only after weeks of production billing.
+    </p>
+  </div>
+ 
+  <div class="finding">
+    <h3>Finding 3 — Day 1 vs production scale</h3>
+    <p>
+      The 35.9% Day 1 savings is a floor. At May 2026 production scale:
+      <strong>97.6% cache read ratio on peak day (May 16).</strong>
+      The mechanism is the same — cache write amortization, context
+      architecture refinement, and session-level reuse across users compound
+      the rate monthly until output tokens become the dominant cost.
+    </p>
+  </div>
+ 
+  <div class="finding">
+    <h3>Finding 4 — What 99.8% actually means</h3>
+    <p>
+      The 99.8% raw input reduction is real. It is not the same as
+      99.8% cost reduction. Output tokens are not cacheable and represent
+      the dominant cost at steady state. Two distinct verified numbers:
+      <strong>99.8% reduction in raw input tokens. 35.9% reduction in
+      total API cost at Day 1.</strong> The screenshot-verified May 2026
+      total cost reduction is <strong>79.3%</strong> ($89.40 actual vs
+      $432.03 standard rate, 144M tokens). The 97.6% figure is the
+      cache <em>read ratio</em> on peak day — a different metric,
+      not a cost reduction percentage.
+    </p>
+  </div>
+ 
+</div>
+ 
+<!-- Scale table -->
+<div class="scale-section">
+  <h2>Scaling the Day 1 Number</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Volume</th>
+        <th>Monthly cost (Config A)</th>
+        <th>Monthly cost (Config C)</th>
+        <th>Monthly savings</th>
+        <th>Annual savings</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2,000 req/mo (3 engineers)</td>
+        <td class="muted">$10.12</td>
+        <td class="muted">$6.48</td>
+        <td class="savings">$3.63</td>
+        <td class="savings">$43.56</td>
+      </tr>
+      <tr>
+        <td>50,000 req/mo (startup)</td>
+        <td class="muted">$252.90</td>
+        <td class="muted">$162.10</td>
+        <td class="savings">$90.80</td>
+        <td class="savings">$1,089.60</td>
+      </tr>
+      <tr>
+        <td>500,000 req/mo (growth)</td>
+        <td class="muted">$2,529</td>
+        <td class="muted">$1,621</td>
+        <td class="savings">$908</td>
+        <td class="savings">$10,896</td>
+      </tr>
+      <tr>
+        <td>5M req/mo (enterprise)</td>
+        <td class="muted">$25,290</td>
+        <td class="muted">$16,210</td>
+        <td class="savings">$9,080</td>
+        <td class="savings">$108,960</td>
+      </tr>
+      <tr>
+        <td>50M req/mo (hyperscale)</td>
+        <td class="muted">$252,900</td>
+        <td class="muted">$162,100</td>
+        <td class="savings">$90,800</td>
+        <td class="savings">$1,089,600</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.75rem; color:#484f58; margin-top:12px;">
+    Day 1 rates only. Production savings compound monthly as cache architecture matures.
+    May 2026 actual blended rate: $0.62/M tokens vs $3.00/M standard rate.
+  </p>
+</div>
+ 
+<footer>
+  <p>
+    <span class="badge">Lionfish7777</span>
+    <span class="badge">June 6 2026</span>
+    <span class="badge">claude-sonnet-4-6</span>
+    <span class="badge">github.com/Lionfish7777</span>
+  </p>
+  <p style="margin-top:12px;">All data from live API calls. Fresh key. No prior cache state.</p>
+</footer>
+ 
+</body>
+</html>
