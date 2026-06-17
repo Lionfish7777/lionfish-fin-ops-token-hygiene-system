@@ -48,7 +48,7 @@ Rather than paying the bill, we engineered our way out.
 | Prompt cache reads | 59,288,619 **(97.6%)** |
 | Raw input tokens | 27,587 **(0.05%)** |
 | Rate-limited requests | Zero after implementation |
-| June 3 full day session | Shipped entire repo for **$14.98** |
+| June 3 full day session | Shipped entire repo for **$19.50** |
  
 **97.6% of our peak day was cache reads. Raw input was 0.05%.**
  
@@ -70,7 +70,6 @@ Eight screenshots. Immutable timestamps. All workspaces. May 2026.
 - Agentic AI running 24/7 makes this exponentially worse
 - Companies that implement token hygiene now own a structural 
 cost advantage that compounds as AI scales
-
 ---
  
 ## What Lionfish7777 Offers
@@ -81,7 +80,6 @@ any enterprise AI stack for token efficiency.
 - **Token Hygiene Audit** — identify where waste is happening
 - **Implementation Sprint** — install the methodology across your stack
 - **Ongoing Retainer** — continuous monitoring and refinement
-
 ---
  
 *Lionfish7777 | FIN/OPS | Token Hygiene System | Documented May 2026*
