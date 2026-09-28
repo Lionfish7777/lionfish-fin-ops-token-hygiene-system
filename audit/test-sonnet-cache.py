@@ -27,14 +27,15 @@ The Lionfish7777 Token Hygiene System reduces redundant raw input token consumpt
 by architecting context to cache static information once and read it repeatedly,
 routing tasks to the correct models, and loading only what each specific call requires.
  
-This system was developed and proven in May 2026. The verified May 2026 result:
-144,011,625 tokens processed, $89.40 actual bill versus $432.03 at standard rate.
-That is a 79.3% reduction in total API cost — on a real developer account, with receipts."""
+This system was developed and evaluated in May 2026. Across May, the Lionfish7777
+developer account recorded 144,011,625 input tokens and $89.40 in observed token
+cost. A same-volume uncached input-cost baseline calculated at $3.00 per million
+input tokens is $432.03, placing observed cost 79.3% below that calculated baseline.
  
 LARGE_USER_CONTEXT = """You are reviewing the Lionfish7777 token hygiene methodology.
 The system has three compounding layers:
-  Layer 1 — Cache Engine: caches the system prompt, 35.9% savings on Day 1 (proven June 6 2026)
-  Layer 2 — Context Architecture: loads only what each call needs, reduces context size monthly
+  Layer 1 — Cache Engine: uses prompt caching to reduce repeated input cost; the June 6 controlled benchmark recorded a 35.9% lower cost for the steady-state Config C request versus Config A
+  Layer 2 — Context Architecture: loads only what each call needs, reducing unnecessary context
   Layer 3 — Model Routing: routes tasks to the cheapest capable model
  
 Real data — May 16 2026 developer console:
@@ -44,7 +45,7 @@ Real data — May 16 2026 developer console:
   Raw input: 27,587 (0.05%)
   Output: 212,153 (0.3%)
  
-This replaced a 63M token uncontrolled spike with a controlled, predictable consumption pattern."""
+The May 16 peak-day evidence recorded 60,776,845 total tokens, with 97.6% represented by prompt cache reads.
  
  
 def run_test(label: str, **kwargs) -> dict:
@@ -92,11 +93,11 @@ def main():
     """)
  
     # ── SCENARIO A — Monolith, no cache ──────────────────────────────────
-    # system as plain string = no caching possible
+    # Plain system string with no cache_control annotation in this scenario
     a = run_test("A: MONOLITH (no cache) — baseline",
         model=MODEL,
         max_tokens=150,
-        system=SYSTEM_PROMPT,   # plain string — cache_control cannot be added here
+        system=SYSTEM_PROMPT,  # baseline uses no explicit cache_control annotation
         messages=[{
             "role": "user",
             "content": f"Context: {LARGE_USER_CONTEXT}\n\nSummarize the mission in one sentence."
@@ -166,11 +167,12 @@ def main():
   Tokens saved:                  ${saved:.6f}
  
   ────────────────────────────────────────────
-  SCALING (2,000 requests/month):
+  MODELED EXTRAPOLATION ASSUMPTION: one cache-creation request followed by steady-state cache-hit requests
+  MODELED SCALING (2,000 requests/month):
   Monolith:   ${a['total'] * 2000:.4f}/month
   Lionfish:   ${(b['total'] + c['total'] * 1999):.4f}/month
  
-  SCALING (3 engineers/year):
+  MODELED SCALING (3 engineers/year):
   Monolith:   ${a['total'] * 2000 * 12 * 3:.2f}/year
   Lionfish:   ${(b['total'] + c['total'] * 1999) * 12 * 3:.2f}/year
     """)
